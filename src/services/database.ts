@@ -1,6 +1,6 @@
 import mysql from 'mysql';
 
-export const setUpDatabase = () => {
+export const setUpDatabase = async () => {
   return mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
