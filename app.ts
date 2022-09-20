@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { cors } from './src/middleware/cors';
 import routes from './src/routes';
+import { setUpDatabase } from './src/services/database';
 
 // Express
 const app = express ();
@@ -13,7 +14,7 @@ app.use(cors)
 app.use('/', routes);
 
 // Database
-
+setUpDatabase();
 
 // Start
 app.listen(process.env.PORT, () => {

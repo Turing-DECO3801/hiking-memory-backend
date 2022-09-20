@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import authRoute from './auth';
-import singleViewRoute from './singleView';
-import allViewRoute from './allView';
+import memoryRoute from './memory';
+import hikeRoute from './hike';
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ router.get('/', (req: Request, res: Response) => {
 
 // Connect routes
 router.use('/auth', authRoute);
-router.use('/singleView', singleViewRoute)
-router.use('./allViewRoute', allViewRoute);
+router.use('/hike', hikeRoute);
+router.use('/memory', memoryRoute)
 
 export default router;
