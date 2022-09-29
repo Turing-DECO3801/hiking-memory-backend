@@ -13,6 +13,6 @@ router.get('/', (req: Request, res: Response) => {
 // Connect routes
 router.use('/auth', authRoute);
 router.use('/hike', hikeRoute);
-router.use('/memory', memoryRoute)
+router.use('/memory', memoryRoute);
 
 export default router;
