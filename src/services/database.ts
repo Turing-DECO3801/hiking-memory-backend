@@ -8,154 +8,187 @@ export const setUpDatabase = async () => {
         user: process.env.DB_USER,
         password: process.env.DB_PASSWORD,
         database: process.env.DB_DATABASE,
-        port: Number(process.env.DB_PORT)
+        port: Number(process.env.DB_PORT),
+        connectionLimit: 10
     });
 };
 
-export const getAllHikes = async (userId: number): Promise<any> => {
-    const sql = 'SELECT * FROM hikes WHERE user_id = ?';
-    const values = [userId];
-    const query = db.format(sql, values);
+export const getAllHikes = async (email: string): Promise<any> => {
+    const sql = 'SELECT * FROM hikes WHERE email = ?';
+    const values = [email];
 
     return new Promise((resolve, reject) => {
-        db.query(query, (result, error) => {
+        db.query(sql, values, (error, result) => {
             if (error) {
-                reject({error: error});
+                reject({ error: error });
             }
             resolve(result);
         });
     });
 };
 
-export const getAHike = async (userId: number, hikeId): Promise<any> => {
-    const sql = 'SELECT * FROM hikes WHERE id = ? AND user_id = ?';
-    const values = [hikeId, userId];
-    const query = db.format(sql, values);
+export const getAHike = async (email: string, hikeId): Promise<any> => {
+    const sql = 'SELECT * FROM hikes WHERE id = ? AND email = ?';
+    const values = [hikeId, email];
 
     return new Promise((resolve, reject) => {
-        db.query(query, (result, error) => {
+        db.query(sql, values, (error, result) => {
             if (error) {
-                reject({error: error});
+                reject({ error: error });
             }
             resolve(result);
         });
     });
 };
 
-export const deleteAHike = async (userId: number, hikeId): Promise<any> => {
-    const sql = 'DELETE FROM hikes WHERE id = ? AND user_id = ?';
-    const values = [hikeId, userId];
-    const query = db.format(sql, values);
+export const deleteAHike = async (email: string, hikeId): Promise<any> => {
+    const sql = 'DELETE FROM hikes WHERE id = ? AND email = ?';
+    const values = [hikeId, email];
 
     return new Promise((resolve, reject) => {
-        db.query(query, (result, error) => {
+        db.query(sql, values, (error, result) => {
             if (error) {
-                reject({error: error});
+                reject({ error: error });
             }
             resolve(result);
         });
     });
 };
 
-export const favouriteAHike = async (userId: number, hikeId, value): Promise<any> => {
-    const sql = 'UPDATE hikes SET favourite = ? WHERE id = ? AND user_id = ?';
-    const values = [value, hikeId, userId];
-    const query = db.format(sql, values);
+export const favouriteAHike = async (email: string, hikeId, value): Promise<any> => {
+    const sql = 'UPDATE hikes SET favourite = ? WHERE id = ? AND email = ?';
+    const values = [value, hikeId, email];
 
     return new Promise((resolve, reject) => {
-        db.query(query, (result, error) => {
+        db.query(sql, values, (error, result) => {
             if (error) {
-                reject({error: error});
+                reject({ error: error });
             }
             resolve(result);
         });
     });
 };
 
-export const updateNotes = async (userId: number, memoId, value): Promise<any> => {
-    const sql = 'UPDATE memos SET notes = ? WHERE id = ? AND user_id = ?';
-    const values = [value, memoId, userId];
-    const query = db.format(sql, values);
+export const updateNotes = async (email: string, memoId, value): Promise<any> => {
+    const sql = 'UPDATE memos SET notes = ? WHERE id = ? AND email = ?';
+    const values = [value, memoId, email];
 
     return new Promise((resolve, reject) => {
-        db.query(query, (result, error) => {
+        db.query(sql, values, (error, result) => {
             if (error) {
-                reject({error: error});
+                reject({ error: error });
             }
             resolve(result);
         });
     });
 };
 
-export const updateTranscription = async (userId: number, memoId, value): Promise<any> => {
-    const sql = 'UPDATE memos SET transcription = ? WHERE id = ? AND user_id = ?';
-    const values = [value, memoId, userId];
-    const query = db.format(sql, values);
+export const updateTranscription = async (email: string, memoId, value): Promise<any> => {
+    const sql = 'UPDATE memos SET transcription = ? WHERE id = ? AND email = ?';
+    const values = [value, memoId, email];
 
     return new Promise((resolve, reject) => {
-        db.query(query, (result, error) => {
+        db.query(sql, values, (error, result) => {
             if (error) {
-                reject({error: error});
+                reject({ error: error });
             }
             resolve(result);
         });
     });
 };
 
-export const updateAudioPointer = async (userId: number, memoId, value): Promise<any> => {
-    const sql = 'UPDATE memos SET audio = ? WHERE id = ? AND user_id = ?';
-    const values = [value, memoId, userId];
-    const query = db.format(sql, values);
+export const updateAudioPointer = async (email: string, memoId, value): Promise<any> => {
+    const sql = 'UPDATE memos SET audio = ? WHERE id = ? AND email = ?';
+    const values = [value, memoId, email];
 
     return new Promise((resolve, reject) => {
-        db.query(query, (result, error) => {
+        db.query(sql, values, (error, result) => {
             if (error) {
-                reject({error: error});
+                reject({ error: error });
             }
             resolve(result);
         });
     });
 };
 
-export const getAMemo = async (userId: number, memoId): Promise<any> => {
-    const sql = 'SELECT memos WHERE id = ? AND user_id = ?';
-    const values = [memoId, userId];
-    const query = db.format(sql, values);
+export const getAMemo = async (email: string, memoId): Promise<any> => {
+    const sql = 'SELECT memos WHERE id = ? AND email = ?';
+    const values = [memoId, email];
 
     return new Promise((resolve, reject) => {
-        db.query(query, (result, error) => {
+        db.query(sql, values, (error, result) => {
             if (error) {
-                reject({error: error});
+                reject({ error: error });
             }
             resolve(result);
         });
     });
 };
 
-export const getAllMemos = async (userId: number, hikeId): Promise<any> => {
-    const sql = 'SELECT memos WHERE hike_id = ? AND user_id = ?';
-    const values = [hikeId, userId];
-    const query = db.format(sql, values);
+export const getAllMemos = async (email: string, hikeId): Promise<any> => {
+    const sql = 'SELECT memos WHERE hike_id = ? AND email = ?';
+    const values = [hikeId, email];
 
     return new Promise((resolve, reject) => {
-        db.query(query, (result, error) => {
+        db.query(sql, values, (error, result) => {
             if (error) {
-                reject({error: error});
+                reject({ error: error });
             }
             resolve(result);
         });
     });
 };
 
-export const updateImagePointer = async (userId: number, memoId, value): Promise<any> => {
-    const sql = 'UPDATE memos SET image = ? WHERE id = ? AND user_id = ?';
-    const values = [value, memoId, userId];
-    const query = db.format(sql, values);
+export const updateImagePointer = async (email: string, memoId, value): Promise<any> => {
+    const sql = 'UPDATE memos SET image = ? WHERE id = ? AND email = ?';
+    const values = [value, memoId, email];
 
     return new Promise((resolve, reject) => {
-        db.query(query, (result, error) => {
+        db.query(sql, values, (error, result) => {
             if (error) {
-                reject({error: error});
+                reject({ error: error });
+            }
+            resolve(result);
+        });
+    });
+};
+
+export const checkEmailExist = async (email): Promise<any> => {
+    const sql = 'SELECT * FROM users WHERE email = ?';
+    const values = [email];
+
+    return new Promise((resolve, reject) => {
+        db.query(sql, values, (error, result) => {
+            if (error) {
+                reject({ error: error });
+            }
+            resolve(result);
+        });
+    });
+};
+
+export const addNewUser = async (email, password): Promise<any> => {
+    const sql = 'INSERT INTO users(email, password, insertion_time)';
+    const values = [email, password, 'NOW()'];
+
+    return new Promise((resolve, reject) => {
+        db.query(sql, values, (error, result) => {
+            if (error) {
+                reject({ error: error });
+            }
+            resolve(result);
+        });
+    });
+};
+
+export const getUser = async (email, password): Promise<any> => {
+    const sql = 'SELECT * FROM users WHERE email = ? AND password = ?';
+    const values = [email, password];
+
+    return new Promise((resolve, reject) => {
+        db.query(sql, values, (error, result) => {
+            if (error) {
+                reject({ error: error });
             }
             resolve(result);
         });

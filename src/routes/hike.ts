@@ -5,31 +5,33 @@ import { getAudioUrl, getImageUrl } from '../services/s3';
 const router = Router();
 
 /** Get all hikes */
-router.get('/hikes', async (req: Request, res: Response) => {
-    // TODO: Get actual userId when authentication is set up
-    const userId = 1;
+router.get('/', async (req: Request, res: Response) => {
+    const actualEmail = req.get('actualEmail');
 
-    const allHikes = await getAllHikes(userId);
+    const allHikes = await getAllHikes(actualEmail);
     if (allHikes.error) {
-        res.status(500).send(allHikes.error);
+        res.status(500).send({ error: 'Unknown error' });
+        return;
     }
 
     res.send(allHikes);
 });
 
 /** Get a hike */
-router.get('/hike/:id', async (req: Request, res: Response) => {
-    const userId = 1;
+router.get('/:id', async (req: Request, res: Response) => {
+    const actualEmail = req.get('actualEmail');
     const hikeId = req.query.id;
 
-    const hike = await getAHike(userId, hikeId);
+    const hike = await getAHike(actualEmail, hikeId);
     if (hike.error) {
-        res.status(500).send(hike.error);
+        res.status(500).send({ error: 'Unknown error' });
+        return;
     }
 
-    const allMemos = await getAllMemos(userId, hikeId);
+    const allMemos = await getAllMemos(actualEmail, hikeId);
     if (allMemos.error) {
-        res.status(500).send(hike.error);
+        res.status(500).send({ error: 'Unknown error' });
+        return;
     }
 
     // Generate URLs for files
@@ -43,35 +45,39 @@ router.get('/hike/:id', async (req: Request, res: Response) => {
 });
 
 /** Delete a hike */
-router.delete('/hike/:id', async (req: Request, res: Response) => {
-    const userId = 1;
+router.delete('/:id', async (req: Request, res: Response) => {
+    const actualEmail = req.get('actualEmail');
     const hikeId = req.query.id;
 
-    const result = await deleteAHike(userId, hikeId);
+    const result = await deleteAHike(actualEmail, hikeId);
     if (result.error) {
-        res.status(500).send(result.error);
+        res.status(500).send({ error: 'Unknown error' });
+        return;
     }
 
     if (result.affectedRows === 0) {
-        res.send(false);
+        res.status(500).send({ error: 'Unknown error' });
+        return;
     } 
 
     res.send(true);
 });
 
 /** Favourite a hike */
-router.put('/hike/:id/favourite', async (req: Request, res: Response) => {
-    const userId = 1;
+router.put('/:id/favourite', async (req: Request, res: Response) => {
+    const actualEmail = req.get('actualEmail');
     const hikeId = req.query.id;
     const value = req.body.value;
 
-    const result = await favouriteAHike(userId, hikeId, value);
+    const result = await favouriteAHike(actualEmail, hikeId, value);
     if (result.error) {
-        res.status(500).send(result.error);
+        res.status(500).send({ error: result.error });
+        return;
     } 
 
     if (result.affectedRows === 0) {
-        res.send(false);
+        res.status(500).send({ error: 'Unknown error' });
+        return;
     } 
 
     res.send(true);

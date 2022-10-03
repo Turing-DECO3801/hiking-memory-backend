@@ -4,15 +4,17 @@ import { cors } from './src/middleware/cors';
 import routes from './src/routes';
 import { setUpDatabase } from './src/services/database';
 import { setUpS3 } from './src/services/s3';
+import { setEmailHeader } from './src/middleware/setEmailHeader';
 
 const configure = async () => {
     // Express
     const app = express();
 
-    // Middleware
+    // Middlewares
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(express.json());
     app.use(cors);
+    app.use(setEmailHeader);
     app.use('/', routes);
 
     // Database

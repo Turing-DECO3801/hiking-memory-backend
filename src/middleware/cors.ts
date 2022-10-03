@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-export function cors(req: Request, res: Response, next: NextFunction) {
+export const cors = (req: Request, res: Response, next: NextFunction) => {
     // Add CORS headers
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
@@ -15,4 +15,4 @@ export function cors(req: Request, res: Response, next: NextFunction) {
     } else {
         next();
     }
-}
+};
