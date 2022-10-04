@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 const router = Router();
 
 router.post('/:memoId/notes', async (req: Request, res: Response) => {
-    const actualEmail = req.get('actualEmail');
+    const actualEmail = req.headers.actualEmail as string;
     const memoId = req.query.memoId;
     const value = req.body.value;
 
@@ -26,7 +26,7 @@ router.post('/:memoId/notes', async (req: Request, res: Response) => {
 });
 
 router.post('/:memoId/audio', async (req: Request, res: Response) => {
-    const actualEmail = req.get('actualEmail');
+    const actualEmail = req.headers.actualEmail as string;
     const memoId = req.query.memoId;
     const value = req.body.value;
 
@@ -55,7 +55,7 @@ router.post('/:memoId/audio', async (req: Request, res: Response) => {
 });
 
 router.delete('/:memoId/audio', async (req: Request, res: Response) => {
-    const actualEmail = req.get('actualEmail');
+    const actualEmail = req.headers.actualEmail as string;
     const memoId = req.query.memoId;
 
     const memo = await getAMemo(actualEmail, memoId);
@@ -71,7 +71,7 @@ router.delete('/:memoId/audio', async (req: Request, res: Response) => {
 });
 
 router.post('/:memoId/image', async (req: Request, res: Response) => {
-    const actualEmail = req.get('actualEmail');
+    const actualEmail = req.headers.actualEmail as string;
     const memoId = req.query.memoId;
     const value = req.body.value;
 
@@ -100,7 +100,7 @@ router.post('/:memoId/image', async (req: Request, res: Response) => {
 });
 
 router.delete('/:memoId/image', async (req: Request, res: Response) => {
-    const actualEmail = req.get('actualEmail');
+    const actualEmail = req.headers.actualEmail as string;
     const memoId = req.query.memoId;
 
     const memo = await getAMemo(actualEmail, memoId);
@@ -116,7 +116,7 @@ router.delete('/:memoId/image', async (req: Request, res: Response) => {
 });
 
 router.post('/:memoId/transcription', async (req: Request, res: Response) => {
-    const actualEmail = req.get('actualEmail');
+    const actualEmail = req.headers.actualEmail as string;
     const memoId = req.query.memoId;
     const value = req.body.value;
 

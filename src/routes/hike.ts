@@ -6,9 +6,11 @@ const router = Router();
 
 /** Get all hikes */
 router.get('/', async (req: Request, res: Response) => {
-    const actualEmail = req.get('actualEmail');
+    const actualEmail = req.headers.actualEmail as string;
 
+    console.log('actual: ', actualEmail);
     const allHikes = await getAllHikes(actualEmail);
+    console.log('allHikes', allHikes);
     if (allHikes.error) {
         res.status(500).send({ error: 'Unknown error' });
         return;
@@ -19,7 +21,7 @@ router.get('/', async (req: Request, res: Response) => {
 
 /** Get a hike */
 router.get('/:id', async (req: Request, res: Response) => {
-    const actualEmail = req.get('actualEmail');
+    const actualEmail = req.headers.actualEmail as string;
     const hikeId = req.query.id;
 
     const hike = await getAHike(actualEmail, hikeId);
@@ -46,7 +48,7 @@ router.get('/:id', async (req: Request, res: Response) => {
 
 /** Delete a hike */
 router.delete('/:id', async (req: Request, res: Response) => {
-    const actualEmail = req.get('actualEmail');
+    const actualEmail = req.headers.actualEmail as string;
     const hikeId = req.query.id;
 
     const result = await deleteAHike(actualEmail, hikeId);
@@ -65,7 +67,7 @@ router.delete('/:id', async (req: Request, res: Response) => {
 
 /** Favourite a hike */
 router.put('/:id/favourite', async (req: Request, res: Response) => {
-    const actualEmail = req.get('actualEmail');
+    const actualEmail = req.headers.actualEmail as string;
     const hikeId = req.query.id;
     const value = req.body.value;
 
