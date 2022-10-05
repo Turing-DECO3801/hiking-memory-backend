@@ -18,11 +18,11 @@ router.post('/:memoId/notes', async (req: Request, res: Response) => {
     } 
 
     if (result.affectedRows === 0) {
-        res.send(false);
+        res.send({ result: true });
         return;
     }
 
-    res.send(true);
+    res.send({ result: true });
 });
 
 router.post('/:memoId/audio', async (req: Request, res: Response) => {
@@ -51,7 +51,7 @@ router.post('/:memoId/audio', async (req: Request, res: Response) => {
         return;
     }
 
-    res.send(true);
+    res.send({ result: true });
 });
 
 router.delete('/:memoId/audio', async (req: Request, res: Response) => {
@@ -67,7 +67,7 @@ router.delete('/:memoId/audio', async (req: Request, res: Response) => {
         return;
     }
 
-    res.send(true);
+    res.send({ result: true });
 });
 
 router.post('/:memoId/image', async (req: Request, res: Response) => {
@@ -96,7 +96,7 @@ router.post('/:memoId/image', async (req: Request, res: Response) => {
         return;
     }
 
-    res.send(true);
+    res.send({ result: true });
 });
 
 router.delete('/:memoId/image', async (req: Request, res: Response) => {
@@ -112,7 +112,7 @@ router.delete('/:memoId/image', async (req: Request, res: Response) => {
         return;
     }
 
-    res.send(true);
+    res.send({ result: true });
 });
 
 router.post('/:memoId/transcription', async (req: Request, res: Response) => {
@@ -131,7 +131,7 @@ router.post('/:memoId/transcription', async (req: Request, res: Response) => {
         return;
     } 
 
-    res.send(true);
+    res.send({ result: true });
 });
 
 export default router;

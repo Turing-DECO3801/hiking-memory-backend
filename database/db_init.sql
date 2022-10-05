@@ -1,10 +1,11 @@
-CREATE DATABASE IF NOT EXISTS Deco3801;
+CREATE DATABASE IF NOT EXISTS hiking_memory_maker;
 
-USE Deco3801;
+USE hiking_memory_maker;
 
 CREATE TABLE IF NOT EXISTS users(
     `email` VARCHAR(255),
     `password` VARCHAR(32),
+    `name` VARCHAR(50),
     `insertion_time` TIMESTAMP,
     PRIMARY KEY (`email`)
 );
@@ -37,8 +38,8 @@ CREATE TABLE IF NOT EXISTS memos(
 );
 
 
-INSERT INTO users(`email`,`password`,`insertion_time`)
-VALUES ('test1@gmail.com', 'test', NOW());
+INSERT INTO users(`email`,`password`,`name`,`insertion_time`)
+VALUES ('test1@gmail.com','test',`Test Person`,NOW());
 
 INSERT INTO hikes(`email`,`gps_logs`,`distance`,`start_time`,`end_time`,`path_name`,`favourite`,`insertion_time`)
-VALUES ('test1@gmail.com', 'fakeGPS.txt', 10, NOW(), NOW(), 'fakePathName', 1, NOW());
+VALUES ('test1@gmail.com','fakeGPS.txt',10,NOW(),NOW(),'fakePathName',1,NOW());

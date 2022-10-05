@@ -20,41 +20,47 @@ router.post('/login', async (req: Request, res: Response) => {
     }
 
     if (user.length > 0) {
-        res.send(true);
+        res.send({ user: user[0], result: true });
         return;
     } 
 
-    res.send(false);
+    res.send({ result: false });
 });
 
 router.post('/signup', async (req: Request, res: Response) => {
     const email = req.body.email;
     const password = req.body.password;
+    const name = req.body.name;
+
+    if (!email || !password || !name) {
+        res.status(400).send({ error: 'Missing details' });
+        return;
+    }
 
     if (password.length > 32) {
-        res.status(400).send('Password is too long');
+        res.status(400).send({ error: 'Password is too long' });
         return;
     }
 
     const valid = validateEmail(email);
     if (!valid) {
-        res.status(400).send('Email format is invalid');
+        res.status(400).send({ error: 'Email format is invalid' });
         return;
     }
 
     const user = await checkEmailExist(email);
     if (user) {
-        res.status(409).send('Email already exists');
+        res.status(409).send({ error: 'Email already exists' });
         return;
     }
 
-    const result = await addNewUser(email, password);
+    const result = await addNewUser(email, password, name);
     if (result.error) {
         res.status(500).send({ error: 'Unknown error' });
         return;
     }
 
-    res.send(true);
+    res.send({ result: true });
 });
 
 export default router;

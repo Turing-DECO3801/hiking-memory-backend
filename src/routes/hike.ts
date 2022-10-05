@@ -69,7 +69,7 @@ router.delete('/:id', async (req: Request, res: Response) => {
         return;
     } 
 
-    res.send(true);
+    res.send({ result: true });
 });
 
 /** Favourite a hike */
@@ -89,7 +89,7 @@ router.put('/:id/favourite', async (req: Request, res: Response) => {
         return;
     } 
 
-    res.send(true);
+    res.send({ result: true });
 });
 
 export default router;
