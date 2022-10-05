@@ -1,10 +1,26 @@
 import S3 from 'aws-sdk/clients/s3';
-import { S3_AUDIO_BUCKET, S3_IMAGE_BUCKET, S3_URL_EXPIRATION_TIME } from '../types/constant';
+import { S3_AUDIO_BUCKET, S3_GPS_LOGS, S3_IMAGE_BUCKET, S3_URL_EXPIRATION_TIME } from '../types/constant';
 
 export let s3: S3;
 
 export const setUpS3 = async () => {
     s3 = new S3({apiVersion: '2006-03-01'});
+};
+
+export const getGPSLogs = async (logName): Promise<any> => {
+    const params = {
+        Bucket: S3_GPS_LOGS,
+        Key: logName,
+    };
+
+    return new Promise((resolve, reject) => {
+        s3.getObject(params, (error, data) => {
+            if (error) {
+                reject({error: error});
+            }
+            resolve(data);
+        });
+    });
 };
 
 export const uploadAudio = async (audioName, audio): Promise<any> => {

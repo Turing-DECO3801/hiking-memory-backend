@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { deleteAHike, getAllHikes, getAHike, favouriteAHike, getAllMemos } from '../services/database';
-import { getAudioUrl, getImageUrl } from '../services/s3';
+import { getAudioUrl, getGPSLogs, getImageUrl } from '../services/s3';
 
 const router = Router();
 
@@ -8,9 +8,7 @@ const router = Router();
 router.get('/', async (req: Request, res: Response) => {
     const actualEmail = req.headers.actualEmail as string;
 
-    console.log('actual: ', actualEmail);
     const allHikes = await getAllHikes(actualEmail);
-    console.log('allHikes', allHikes);
     if (allHikes.error) {
         res.status(500).send({ error: 'Unknown error' });
         return;
@@ -29,6 +27,15 @@ router.get('/:id', async (req: Request, res: Response) => {
         res.status(500).send({ error: 'Unknown error' });
         return;
     }
+
+    const gpsLogs = await getGPSLogs(hike.gps_logs);
+    if (gpsLogs.error) {
+        res.status(500).send({ error: 'Unknown error' });
+        return;
+    }
+
+    // Add logs
+    hike.logs = gpsLogs;
 
     const allMemos = await getAllMemos(actualEmail, hikeId);
     if (allMemos.error) {
