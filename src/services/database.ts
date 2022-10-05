@@ -20,9 +20,9 @@ export const getAllHikes = async (email: string): Promise<any> => {
     return new Promise((resolve, reject) => {
         db.query(sql, values, (error, result) => {
             if (error) {
-                reject({ error: error });
+                resolve({ error: error });
             }
-            resolve(result);
+            resolve(JSON.parse(JSON.stringify(result)));
         });
     });
 };
@@ -34,9 +34,9 @@ export const getAHike = async (email: string, hikeId): Promise<any> => {
     return new Promise((resolve, reject) => {
         db.query(sql, values, (error, result) => {
             if (error) {
-                reject({ error: error });
+                resolve({ error: error });
             }
-            resolve(result);
+            resolve(JSON.parse(JSON.stringify(result)));
         });
     });
 };
@@ -48,7 +48,7 @@ export const deleteAHike = async (email: string, hikeId): Promise<any> => {
     return new Promise((resolve, reject) => {
         db.query(sql, values, (error, result) => {
             if (error) {
-                reject({ error: error });
+                resolve({ error: error });
             }
             resolve(result);
         });
@@ -62,91 +62,91 @@ export const favouriteAHike = async (email: string, hikeId, value): Promise<any>
     return new Promise((resolve, reject) => {
         db.query(sql, values, (error, result) => {
             if (error) {
-                reject({ error: error });
+                resolve({ error: error });
             }
             resolve(result);
         });
     });
 };
 
-export const updateNotes = async (email: string, memoId, value): Promise<any> => {
-    const sql = 'UPDATE memos SET notes = ? WHERE id = ? AND email = ?';
-    const values = [value, memoId, email];
+export const updateNotes = async ( memoId, value): Promise<any> => {
+    const sql = 'UPDATE memos SET notes = ? WHERE id = ?';
+    const values = [value, memoId];
 
     return new Promise((resolve, reject) => {
         db.query(sql, values, (error, result) => {
             if (error) {
-                reject({ error: error });
+                resolve({ error: error });
             }
             resolve(result);
         });
     });
 };
 
-export const updateTranscription = async (email: string, memoId, value): Promise<any> => {
-    const sql = 'UPDATE memos SET transcription = ? WHERE id = ? AND email = ?';
-    const values = [value, memoId, email];
+export const updateTranscription = async (memoId, value): Promise<any> => {
+    const sql = 'UPDATE memos SET transcription = ? WHERE id = ?';
+    const values = [value, memoId];
 
     return new Promise((resolve, reject) => {
         db.query(sql, values, (error, result) => {
             if (error) {
-                reject({ error: error });
+                resolve({ error: error });
             }
             resolve(result);
         });
     });
 };
 
-export const updateAudioPointer = async (email: string, memoId, value): Promise<any> => {
-    const sql = 'UPDATE memos SET audio = ? WHERE id = ? AND email = ?';
-    const values = [value, memoId, email];
+export const updateAudioPointer = async ( memoId, value): Promise<any> => {
+    const sql = 'UPDATE memos SET audio = ? WHERE id = ?';
+    const values = [value, memoId];
 
     return new Promise((resolve, reject) => {
         db.query(sql, values, (error, result) => {
             if (error) {
-                reject({ error: error });
+                resolve({ error: error });
             }
             resolve(result);
         });
     });
 };
 
-export const getAMemo = async (email: string, memoId): Promise<any> => {
-    const sql = 'SELECT memos WHERE id = ? AND email = ?';
-    const values = [memoId, email];
+export const getAMemo = async (memoId): Promise<any> => {
+    const sql = 'SELECT * FROM memos WHERE id = ?';
+    const values = [memoId];
 
     return new Promise((resolve, reject) => {
         db.query(sql, values, (error, result) => {
             if (error) {
-                reject({ error: error });
+                resolve({ error: error });
             }
-            resolve(result);
+            resolve(JSON.parse(JSON.stringify(result)));
         });
     });
 };
 
-export const getAllMemos = async (email: string, hikeId): Promise<any> => {
-    const sql = 'SELECT memos WHERE hike_id = ? AND email = ?';
-    const values = [hikeId, email];
+export const getAllMemos = async (hikeId): Promise<any> => {
+    const sql = 'SELECT * FROM memos WHERE hike_id = ?';
+    const values = [hikeId];
 
     return new Promise((resolve, reject) => {
         db.query(sql, values, (error, result) => {
             if (error) {
-                reject({ error: error });
+                resolve({ error: error });
             }
-            resolve(result);
+            resolve(JSON.parse(JSON.stringify(result)));
         });
     });
 };
 
-export const updateImagePointer = async (email: string, memoId, value): Promise<any> => {
-    const sql = 'UPDATE memos SET image = ? WHERE id = ? AND email = ?';
-    const values = [value, memoId, email];
+export const updateImagePointer = async (memoId, value): Promise<any> => {
+    const sql = 'UPDATE memos SET image = ? WHERE id = ?';
+    const values = [value, memoId];
 
     return new Promise((resolve, reject) => {
         db.query(sql, values, (error, result) => {
             if (error) {
-                reject({ error: error });
+                resolve({ error: error });
             }
             resolve(result);
         });
@@ -160,9 +160,9 @@ export const checkEmailExist = async (email): Promise<any> => {
     return new Promise((resolve, reject) => {
         db.query(sql, values, (error, result) => {
             if (error) {
-                reject({ error: error });
+                resolve({ error: error });
             }
-            resolve(result);
+            resolve(JSON.parse(JSON.stringify(result)));
         });
     });
 };
@@ -174,7 +174,7 @@ export const addNewUser = async (email, password, name): Promise<any> => {
     return new Promise((resolve, reject) => {
         db.query(sql, values, (error, result) => {
             if (error) {
-                reject({ error: error });
+                resolve({ error: error });
             }
             resolve(result);
         });
@@ -188,9 +188,9 @@ export const getUser = async (email, password): Promise<any> => {
     return new Promise((resolve, reject) => {
         db.query(sql, values, (error, result) => {
             if (error) {
-                reject({ error: error });
+                resolve({ error: error });
             }
-            resolve(result);
+            resolve(JSON.parse(JSON.stringify(result)));
         });
     });
 };

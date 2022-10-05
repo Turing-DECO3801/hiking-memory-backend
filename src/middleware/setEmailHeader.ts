@@ -9,7 +9,7 @@ export const setEmailHeader = async (req: Request, res: Response, next: NextFunc
 
     // Setting userId in header
     user.length > 0 
-        ? req.headers.actualEmail = JSON.parse(JSON.stringify(user))[0].email
+        ? req.headers.actualEmail = user[0].email
         : req.headers.actualEmail = null;
     
     next();

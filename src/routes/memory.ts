@@ -7,11 +7,10 @@ import { v4 as uuidv4 } from 'uuid';
 const router = Router();
 
 router.post('/:memoId/notes', async (req: Request, res: Response) => {
-    const actualEmail = req.headers.actualEmail as string;
-    const memoId = req.query.memoId;
+    const memoId = req.params.memoId;
     const value = req.body.value;
 
-    const result = await updateNotes(actualEmail, memoId, value);
+    const result = await updateNotes(memoId, value);
     if (result.error) {
         res.status(500).send({ error: 'Unknown error' });
         return;
@@ -26,8 +25,7 @@ router.post('/:memoId/notes', async (req: Request, res: Response) => {
 });
 
 router.post('/:memoId/audio', async (req: Request, res: Response) => {
-    const actualEmail = req.headers.actualEmail as string;
-    const memoId = req.query.memoId;
+    const memoId = req.params.memoId;
     const value = req.body.value;
 
     const audioName = uuidv4();
@@ -40,7 +38,7 @@ router.post('/:memoId/audio', async (req: Request, res: Response) => {
     }
 
     // Update reference in database
-    const dbResult = await updateAudioPointer(actualEmail, memoId, audioName);
+    const dbResult = await updateAudioPointer(memoId, audioName);
     if (dbResult.error) {
         res.status(500).send({ error: 'Unknown error' });
         return;
@@ -55,10 +53,9 @@ router.post('/:memoId/audio', async (req: Request, res: Response) => {
 });
 
 router.delete('/:memoId/audio', async (req: Request, res: Response) => {
-    const actualEmail = req.headers.actualEmail as string;
-    const memoId = req.query.memoId;
+    const memoId = req.params.memoId;
 
-    const memo = await getAMemo(actualEmail, memoId);
+    const memo = await getAMemo(memoId);
     const audioName = memo.audio;
 
     const s3Result = await deleteAudio(audioName);
@@ -71,8 +68,7 @@ router.delete('/:memoId/audio', async (req: Request, res: Response) => {
 });
 
 router.post('/:memoId/image', async (req: Request, res: Response) => {
-    const actualEmail = req.headers.actualEmail as string;
-    const memoId = req.query.memoId;
+    const memoId = req.params.memoId;
     const value = req.body.value;
 
     const ImageName = uuidv4();
@@ -85,7 +81,7 @@ router.post('/:memoId/image', async (req: Request, res: Response) => {
     }
 
     // Update reference in database
-    const dbResult = await updateImagePointer(actualEmail, memoId, ImageName);
+    const dbResult = await updateImagePointer(memoId, ImageName);
     if (dbResult.error) {
         res.status(500).send({ error: 'Unknown error' });
         return;
@@ -100,10 +96,9 @@ router.post('/:memoId/image', async (req: Request, res: Response) => {
 });
 
 router.delete('/:memoId/image', async (req: Request, res: Response) => {
-    const actualEmail = req.headers.actualEmail as string;
-    const memoId = req.query.memoId;
+    const memoId = req.params.memoId;
 
-    const memo = await getAMemo(actualEmail, memoId);
+    const memo = await getAMemo(memoId);
     const imageName = memo.image;
 
     const s3Result = await deleteAudio(imageName);
@@ -116,11 +111,10 @@ router.delete('/:memoId/image', async (req: Request, res: Response) => {
 });
 
 router.post('/:memoId/transcription', async (req: Request, res: Response) => {
-    const actualEmail = req.headers.actualEmail as string;
-    const memoId = req.query.memoId;
+    const memoId = req.params.memoId;
     const value = req.body.value;
 
-    const result = await updateTranscription(actualEmail, memoId, value);
+    const result = await updateTranscription(memoId, value);
     if (result.error) {
         res.status(500).send({ error: 'Unknown error' });
         return;

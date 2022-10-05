@@ -1,5 +1,5 @@
 import S3 from 'aws-sdk/clients/s3';
-import { S3_AUDIO_BUCKET, S3_GPS_LOGS, S3_IMAGE_BUCKET, S3_URL_EXPIRATION_TIME } from '../types/constant';
+import { S3_AUDIO_FOLDER, S3_GPS_LOGS_FOLDER, S3_IMAGE_FOLDER, S3_URL_EXPIRATION_TIME } from '../types/constant';
 
 export let s3: S3;
 
@@ -12,14 +12,14 @@ export const setUpS3 = async () => {
 
 export const getGPSLogs = async (logName): Promise<any> => {
     const params = {
-        Bucket: S3_GPS_LOGS,
-        Key: logName,
+        Bucket: process.env.S3_BUCKET_NAME,
+        Key: S3_GPS_LOGS_FOLDER + logName
     };
 
     return new Promise((resolve, reject) => {
         s3.getObject(params, (error, data) => {
             if (error) {
-                reject({error: error});
+                resolve({error: error});
             }
             resolve(data);
         });
@@ -28,15 +28,15 @@ export const getGPSLogs = async (logName): Promise<any> => {
 
 export const uploadAudio = async (audioName, audio): Promise<any> => {
     const params = {
-        Bucket: S3_AUDIO_BUCKET,
-        Key: audioName,
+        Bucket: process.env.S3_BUCKET_NAME,
+        Key: S3_AUDIO_FOLDER + audioName,
         Body: audio
     };
 
     return new Promise((resolve, reject) => {
         s3.upload(params, (error, data) => {
             if (error) {
-                reject({error: error});
+                resolve({error: error});
             }
             resolve(data);
         });
@@ -45,14 +45,14 @@ export const uploadAudio = async (audioName, audio): Promise<any> => {
 
 export const deleteAudio = async (audioName): Promise<any> => {
     const params = {
-        Bucket: S3_AUDIO_BUCKET,
-        Key: audioName,
+        Bucket: process.env.S3_BUCKET_NAME,
+        Key: S3_AUDIO_FOLDER + audioName,
     };
 
     return new Promise((resolve, reject) => {
         s3.deleteObject(params, (error, data) => {
             if (error) {
-                reject({error: error});
+                resolve({error: error});
             }
             resolve(data);
         });
@@ -61,15 +61,15 @@ export const deleteAudio = async (audioName): Promise<any> => {
 
 export const uploadImage = async (imageName, audio): Promise<any> => {
     const params = {
-        Bucket: S3_IMAGE_BUCKET,
-        Key: imageName,
+        Bucket: process.env.S3_BUCKET_NAME,
+        Key: S3_IMAGE_FOLDER + imageName,
         Body: audio
     };
 
     return new Promise((resolve, reject) => {
         s3.upload(params, (error, data) => {
             if (error) {
-                reject({error: error});
+                resolve({error: error});
             }
             resolve(data);
         });
@@ -78,14 +78,14 @@ export const uploadImage = async (imageName, audio): Promise<any> => {
 
 export const deleteImage = async (imageName): Promise<any> => {
     const params = {
-        Bucket: S3_IMAGE_BUCKET,
-        Key: imageName,
+        Bucket: process.env.S3_BUCKET_NAME,
+        Key: S3_IMAGE_FOLDER + imageName,
     };
 
     return new Promise((resolve, reject) => {
         s3.deleteObject(params, (error, data) => {
             if (error) {
-                reject({error: error});
+                resolve({error: error});
             }
             resolve(data);
         });
@@ -94,15 +94,15 @@ export const deleteImage = async (imageName): Promise<any> => {
 
 export const getAudioUrl = async (imageName): Promise<any> => {
     const params = {
-        Bucket: S3_AUDIO_BUCKET,
-        Key: imageName,
-        Expires: S3_URL_EXPIRATION_TIME // 6 days
+        Bucket: process.env.S3_BUCKET_NAME,
+        Key: S3_AUDIO_FOLDER + imageName,
+        Expires: S3_URL_EXPIRATION_TIME
     };
 
     return new Promise((resolve, reject) => {
         s3.getSignedUrl('getObject', params, (error, url) => {
             if (error) {
-                reject({error: error});
+                resolve({error: error});
             }
             resolve(url);
         });
@@ -111,15 +111,15 @@ export const getAudioUrl = async (imageName): Promise<any> => {
 
 export const getImageUrl = async (imageName): Promise<any> => {
     const params = {
-        Bucket: S3_IMAGE_BUCKET,
-        Key: imageName,
+        Bucket: process.env.S3_BUCKET_NAME,
+        Key: S3_IMAGE_FOLDER + imageName,
         Expires: S3_URL_EXPIRATION_TIME // 6 days
     };
 
     return new Promise((resolve, reject) => {
         s3.getSignedUrl('getObject', params, (error, url) => {
             if (error) {
-                reject({error: error});
+                resolve({error: error});
             }
             resolve(url);
         });
