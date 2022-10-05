@@ -22,17 +22,20 @@ router.get('/:id', async (req: Request, res: Response) => {
     const actualEmail = req.headers.actualEmail as string;
     const hikeId = req.query.id;
 
+    console.log('here1');
     const hike = await getAHike(actualEmail, hikeId);
     if (hike.error) {
         res.status(500).send({ error: 'Unknown error' });
         return;
     }
+    console.log('here2');
 
     const gpsLogs = await getGPSLogs(hike.gps_logs);
     if (gpsLogs.error) {
         res.status(500).send({ error: 'Unknown error' });
         return;
     }
+    console.log('here3');
 
     // Add logs
     hike.logs = gpsLogs;
@@ -42,6 +45,7 @@ router.get('/:id', async (req: Request, res: Response) => {
         res.status(500).send({ error: 'Unknown error' });
         return;
     }
+    console.log('here4');
 
     // Generate URLs for files
     await Promise.all(allMemos.forEach((memo) => {
@@ -49,6 +53,7 @@ router.get('/:id', async (req: Request, res: Response) => {
         memo.audioUrl = getAudioUrl(memo.audio);
     }));
     hike.memo = allMemos;
+    console.log('here5');
 
     res.send(hike);
 });
