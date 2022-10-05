@@ -36,7 +36,7 @@ router.get('/:id', async (req: Request, res: Response) => {
         res.status(500).send({ error: 'Unknown error' });
         return;
     }
-    response.logs = gpsLogs.Body.data;
+    response.logs = gpsLogs;
 
     const allMemos = await getAllMemos(hikeId);
     if (allMemos.error) {
