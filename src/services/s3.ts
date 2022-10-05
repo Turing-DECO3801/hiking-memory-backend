@@ -4,7 +4,10 @@ import { S3_AUDIO_BUCKET, S3_GPS_LOGS, S3_IMAGE_BUCKET, S3_URL_EXPIRATION_TIME }
 export let s3: S3;
 
 export const setUpS3 = async () => {
-    s3 = new S3({apiVersion: '2006-03-01'});
+    s3 = new S3({
+        accessKeyId: process.env.S3_ACCESS_KEY_ID,
+        secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
+    });
 };
 
 export const getGPSLogs = async (logName): Promise<any> => {
