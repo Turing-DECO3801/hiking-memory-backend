@@ -46,9 +46,15 @@ router.get('/:id', async (req: Request, res: Response) => {
 
     // Generate URLs for files
     for (const memo of allMemos) {
-        const imageUrl = await getImageUrl(memo.image);
-        const audioUrl = await getAudioUrl(memo.audio);
-        memo.imageUrl = imageUrl;
+        let imageUrl;
+        let audioUrl;
+        if (memo.image) {
+            imageUrl = await getImageUrl(memo.image);
+        }
+        if (memo.audio) {
+            audioUrl = await getAudioUrl(memo.audio);
+        }
+
         memo.audioUrl = audioUrl;
     }
     response.memos = allMemos;
