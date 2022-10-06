@@ -49,7 +49,7 @@ router.post('/signup', async (req: Request, res: Response) => {
     }
 
     const user = await checkEmailExist(email);
-    if (user) {
+    if (user.length > 0) {
         res.status(409).send({ error: 'Email already exists' });
         return;
     }

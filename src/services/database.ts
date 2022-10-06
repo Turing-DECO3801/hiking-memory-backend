@@ -168,7 +168,7 @@ export const checkEmailExist = async (email): Promise<any> => {
 };
 
 export const addNewUser = async (email, password, name): Promise<any> => {
-    const sql = 'INSERT INTO users(email, password, name, insertion_time)';
+    const sql = 'INSERT INTO users(email, password, name, insertion_time) VALUES(?, ?, ?, ?)';
     const values = [email, password, name, 'NOW()'];
 
     return new Promise((resolve, reject) => {
