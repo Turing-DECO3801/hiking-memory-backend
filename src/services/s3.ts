@@ -16,7 +16,7 @@ export const getGPSLogs = async (logName): Promise<any> => {
         Key: S3_GPS_LOGS_FOLDER + logName
     };
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         s3.getObject(params, (error, data) => {
             if (error) {
                 resolve({error: error});
@@ -33,7 +33,7 @@ export const uploadAudio = async (audioName, audio): Promise<any> => {
         Body: audio
     };
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         s3.upload(params, (error, data) => {
             if (error) {
                 resolve({error: error});
@@ -49,7 +49,7 @@ export const deleteAudio = async (audioName): Promise<any> => {
         Key: S3_AUDIO_FOLDER + audioName,
     };
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         s3.deleteObject(params, (error, data) => {
             if (error) {
                 resolve({error: error});
@@ -66,7 +66,7 @@ export const uploadImage = async (imageName, audio): Promise<any> => {
         Body: audio
     };
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         s3.upload(params, (error, data) => {
             if (error) {
                 resolve({error: error});
@@ -82,7 +82,7 @@ export const deleteImage = async (imageName): Promise<any> => {
         Key: S3_IMAGE_FOLDER + imageName,
     };
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         s3.deleteObject(params, (error, data) => {
             if (error) {
                 resolve({error: error});
@@ -99,7 +99,7 @@ export const getAudioUrl = async (imageName): Promise<any> => {
         Expires: S3_URL_EXPIRATION_TIME
     };
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         s3.getSignedUrl('getObject', params, (error, url) => {
             if (error) {
                 resolve({error: error});
@@ -116,7 +116,7 @@ export const getImageUrl = async (imageName): Promise<any> => {
         Expires: S3_URL_EXPIRATION_TIME // 6 days
     };
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         s3.getSignedUrl('getObject', params, (error, url) => {
             if (error) {
                 resolve({error: error});
