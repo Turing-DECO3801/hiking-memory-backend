@@ -69,6 +69,20 @@ export const favouriteAHike = async (email: string, hikeId, value): Promise<any>
     });
 };
 
+export const updateHikeName = async (email: string, hikeId, value): Promise<any> => {
+    const sql = 'UPDATE hikes SET path_name = ? WHERE id = ? AND email = ?';
+    const values = [value, hikeId, email];
+
+    return new Promise((resolve, reject) => {
+        db.query(sql, values, (error, result) => {
+            if (error) {
+                resolve({ error: error });
+            }
+            resolve(result);
+        });
+    });
+};
+
 export const updateNotes = async ( memoId, value): Promise<any> => {
     const sql = 'UPDATE memos SET notes = ? WHERE id = ?';
     const values = [value, memoId];
@@ -125,7 +139,7 @@ export const getAMemo = async (memoId): Promise<any> => {
     });
 };
 
-export const getAllMemos = async (hikeId): Promise<any> => {
+export const getAllMemosForHike = async (hikeId): Promise<any> => {
     const sql = 'SELECT * FROM memos WHERE hike_id = ?';
     const values = [hikeId];
 
@@ -190,6 +204,26 @@ export const getUser = async (email, password): Promise<any> => {
             if (error) {
                 resolve({ error: error });
             }
+            resolve(JSON.parse(JSON.stringify(result)));
+        });
+    });
+};
+
+export const getAllHikePathWithImageForUser = async (email: string): Promise<any> => {
+    const sql = `
+        SELECT hikes.path_name, memos.image
+        FROM hikes
+        INNER JOIN memos
+        ON hikes.id = memos.hike_id AND hikes.email = ?
+    `;
+    const values = [email];
+
+    return new Promise((resolve, reject) => {
+        db.query(sql, values, (error, result) => {
+            if (error) {
+                resolve({ error: error });
+            }
+            console.log(result);
             resolve(JSON.parse(JSON.stringify(result)));
         });
     });

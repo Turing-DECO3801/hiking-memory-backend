@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import authRoute from './auth';
 import memoryRoute from './memory';
 import hikeRoute from './hike';
+import statRoute from './stats';
 
 const router = express.Router();
 
@@ -14,5 +15,6 @@ router.get('/', (req: Request, res: Response) => {
 router.use('/auth', authRoute);
 router.use('/hikes', hikeRoute);
 router.use('/memos', memoryRoute);
+router.use('/stats', statRoute);
 
 export default router;

@@ -7,8 +7,14 @@ import { v4 as uuidv4 } from 'uuid';
 const router = Router();
 
 router.post('/:memoId/notes', async (req: Request, res: Response) => {
+    const actualEmail = req.headers.actualEmail as string;
     const memoId = req.params.memoId;
     const value = req.body.value;
+
+    if (!actualEmail) {
+        res.status(400).send({ error: 'User does not exist' });
+        return;
+    }
 
     const result = await updateNotes(memoId, value);
     if (result.error) {
@@ -25,8 +31,14 @@ router.post('/:memoId/notes', async (req: Request, res: Response) => {
 });
 
 router.post('/:memoId/audio', async (req: Request, res: Response) => {
+    const actualEmail = req.headers.actualEmail as string;
     const memoId = req.params.memoId;
     const value = req.body.value;
+
+    if (!actualEmail) {
+        res.status(400).send({ error: 'User does not exist' });
+        return;
+    }
 
     const audioName = uuidv4();
 
@@ -53,7 +65,13 @@ router.post('/:memoId/audio', async (req: Request, res: Response) => {
 });
 
 router.delete('/:memoId/audio', async (req: Request, res: Response) => {
+    const actualEmail = req.headers.actualEmail as string;
     const memoId = req.params.memoId;
+
+    if (!actualEmail) {
+        res.status(400).send({ error: 'User does not exist' });
+        return;
+    }
 
     const memo = await getAMemo(memoId);
     const audioName = memo.audio;
@@ -68,8 +86,14 @@ router.delete('/:memoId/audio', async (req: Request, res: Response) => {
 });
 
 router.post('/:memoId/image', async (req: Request, res: Response) => {
+    const actualEmail = req.headers.actualEmail as string;
     const memoId = req.params.memoId;
     const value = req.body.value;
+
+    if (!actualEmail) {
+        res.status(400).send({ error: 'User does not exist' });
+        return;
+    }
 
     const ImageName = uuidv4();
 
@@ -96,7 +120,13 @@ router.post('/:memoId/image', async (req: Request, res: Response) => {
 });
 
 router.delete('/:memoId/image', async (req: Request, res: Response) => {
+    const actualEmail = req.headers.actualEmail as string;
     const memoId = req.params.memoId;
+
+    if (!actualEmail) {
+        res.status(400).send({ error: 'User does not exist' });
+        return;
+    }
 
     const memo = await getAMemo(memoId);
     const imageName = memo.image;
@@ -111,8 +141,14 @@ router.delete('/:memoId/image', async (req: Request, res: Response) => {
 });
 
 router.post('/:memoId/transcription', async (req: Request, res: Response) => {
+    const actualEmail = req.headers.actualEmail as string;
     const memoId = req.params.memoId;
     const value = req.body.value;
+
+    if (!actualEmail) {
+        res.status(400).send({ error: 'User does not exist' });
+        return;
+    }
 
     const result = await updateTranscription(memoId, value);
     if (result.error) {
