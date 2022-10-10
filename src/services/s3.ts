@@ -59,11 +59,11 @@ export const deleteAudio = async (audioName): Promise<any> => {
     });
 };
 
-export const uploadImage = async (imageName, audio): Promise<any> => {
+export const uploadImage = async (imageName, image): Promise<any> => {
     const params = {
         Bucket: process.env.S3_BUCKET_NAME,
         Key: S3_IMAGE_FOLDER + imageName,
-        Body: audio
+        Body: image
     };
 
     return new Promise((resolve) => {

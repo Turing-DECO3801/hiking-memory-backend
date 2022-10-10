@@ -1,7 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { getAMemo, updateAudioPointer, updateImagePointer, updateNotes, updateTranscription } from '../services/database';
 import { deleteAudio, uploadAudio, uploadImage } from '../services/s3';
-
 import { v4 as uuidv4 } from 'uuid';
 
 const router = Router();
@@ -33,7 +32,7 @@ router.post('/:memoId/notes', async (req: Request, res: Response) => {
 router.post('/:memoId/audio', async (req: Request, res: Response) => {
     const actualEmail = req.headers.actualEmail as string;
     const memoId = req.params.memoId;
-    const value = req.body.value;
+    const value = Buffer.from(req.body.value, 'binary');
 
     if (!actualEmail) {
         res.status(400).send({ error: 'User does not exist' });
@@ -88,7 +87,7 @@ router.delete('/:memoId/audio', async (req: Request, res: Response) => {
 router.post('/:memoId/image', async (req: Request, res: Response) => {
     const actualEmail = req.headers.actualEmail as string;
     const memoId = req.params.memoId;
-    const value = req.body.value;
+    const value = Buffer.from(req.body.value, 'binary');
 
     if (!actualEmail) {
         res.status(400).send({ error: 'User does not exist' });

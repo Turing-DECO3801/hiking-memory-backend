@@ -223,7 +223,6 @@ export const getAllHikePathWithImageForUser = async (email: string): Promise<any
             if (error) {
                 resolve({ error: error });
             }
-            console.log(result);
             resolve(JSON.parse(JSON.stringify(result)));
         });
     });
