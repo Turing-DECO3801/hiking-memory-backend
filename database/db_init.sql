@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS hikes(
     `end_time` DATETIME,
     `path_name` VARCHAR(30),
     `favourite` BOOLEAN,
+    `viewed` BOOLEAN,
     `insertion_time` TIMESTAMP,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`email`) REFERENCES users(`email`)
@@ -41,5 +42,5 @@ CREATE TABLE IF NOT EXISTS memos(
 INSERT INTO users(`email`,`password`,`name`,`insertion_time`)
 VALUES ('test1@gmail.com','test',`Test Person`,NOW());
 
-INSERT INTO hikes(`email`,`gps_logs`,`distance`,`start_time`,`end_time`,`path_name`,`favourite`,`insertion_time`)
-VALUES ('test1@gmail.com','fakeGPS.txt',10,NOW(),NOW(),'fakePathName',1,NOW());
+INSERT INTO hikes(`email`,`gps_logs`,`distance`,`start_time`,`end_time`,`path_name`,`favourite`,`viewed`,`insertion_time`)
+VALUES ('test1@gmail.com','fakeGPS.txt',10,NOW(),NOW(),'fakePathName',1,1,NOW());

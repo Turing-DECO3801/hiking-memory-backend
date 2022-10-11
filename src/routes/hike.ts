@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { deleteAHike, getAllHikes, getAHike, favouriteAHike, getAllMemosForHike, updateHikeName } from '../services/database';
+import { deleteAHike, getAllHikes, getAHike, favouriteAHike, getAllMemosForHike, updateHikeName, updateHikeViewedStatus, updateHikeDistance } from '../services/database';
 import { getAudioUrl, getGPSLogs, getImageUrl } from '../services/s3';
 
 const router = Router();
@@ -122,6 +122,31 @@ router.put('/:id/name', async (req: Request, res: Response) => {
     res.send({ result: true });
 });
 
+/** Update distance */
+router.put('/:id/distance', async (req: Request, res: Response) => {
+    const actualEmail = req.headers.actualEmail as string;
+    const hikeId = req.params.id;
+    const value = req.body.value;
+
+    if (!actualEmail) {
+        res.status(400).send({ error: 'User does not exist' });
+        return;
+    }
+
+    const result = await updateHikeDistance(actualEmail, hikeId, value);
+    if (result.error) {
+        res.status(500).send({ error: result.error });
+        return;
+    } 
+
+    if (result.affectedRows === 0) {
+        res.status(500).send({ error: 'Unknown error' });
+        return;
+    }
+
+    res.send({ result: true });
+});
+
 /** Favourite a hike */
 router.put('/:id/favourite', async (req: Request, res: Response) => {
     const actualEmail = req.headers.actualEmail as string;
@@ -134,6 +159,31 @@ router.put('/:id/favourite', async (req: Request, res: Response) => {
     }
 
     const result = await favouriteAHike(actualEmail, hikeId, value);
+    if (result.error) {
+        res.status(500).send({ error: result.error });
+        return;
+    } 
+
+    if (result.affectedRows === 0) {
+        res.status(500).send({ error: 'Unknown error' });
+        return;
+    } 
+
+    res.send({ result: true });
+});
+
+/** Update a hike's view status */
+router.put('/:id/viewed', async (req: Request, res: Response) => {
+    const actualEmail = req.headers.actualEmail as string;
+    const hikeId = req.params.id;
+    const value = req.body.value;
+
+    if (!actualEmail) {
+        res.status(400).send({ error: 'User does not exist' });
+        return;
+    }
+
+    const result = await updateHikeViewedStatus(actualEmail, hikeId, value);
     if (result.error) {
         res.status(500).send({ error: result.error });
         return;

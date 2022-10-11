@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { getAllHikePathWithImageForUser, getAllHikes } from '../services/database';
+import { getAllHikePathWithImageForUser } from '../services/database';
 import { getImageUrl } from '../services/s3';
 
 const router = Router();

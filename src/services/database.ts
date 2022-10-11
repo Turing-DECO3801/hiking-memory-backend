@@ -69,6 +69,34 @@ export const favouriteAHike = async (email: string, hikeId, value): Promise<any>
     });
 };
 
+export const updateHikeViewedStatus = async (email: string, hikeId, value): Promise<any> => {
+    const sql = 'UPDATE hikes SET viewed = ? WHERE id = ? AND email = ?';
+    const values = [value, hikeId, email];
+
+    return new Promise((resolve) => {
+        db.query(sql, values, (error, result) => {
+            if (error) {
+                resolve({ error: error });
+            }
+            resolve(result);
+        });
+    });
+};
+
+export const updateHikeDistance = async (email: string, hikeId, value): Promise<any> => {
+    const sql = 'UPDATE hikes SET distance = ? WHERE id = ? AND email = ?';
+    const values = [value, hikeId, email];
+
+    return new Promise((resolve) => {
+        db.query(sql, values, (error, result) => {
+            if (error) {
+                resolve({ error: error });
+            }
+            resolve(result);
+        });
+    });
+};
+
 export const updateHikeName = async (email: string, hikeId, value): Promise<any> => {
     const sql = 'UPDATE hikes SET path_name = ? WHERE id = ? AND email = ?';
     const values = [value, hikeId, email];
