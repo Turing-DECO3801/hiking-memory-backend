@@ -3,6 +3,9 @@ import { S3_AUDIO_FOLDER, S3_GPS_LOGS_FOLDER, S3_IMAGE_FOLDER, S3_URL_EXPIRATION
 
 export let s3: S3;
 
+/**
+ * Establish connection to S3
+ */
 export const setUpS3 = async () => {
     s3 = new S3({
         accessKeyId: process.env.S3_ACCESS_KEY_ID,
@@ -10,6 +13,11 @@ export const setUpS3 = async () => {
     });
 };
 
+/**
+ * Get GPS logs
+ * @param logName File name
+ * @returns GPS logs
+ */
 export const getGPSLogs = async (logName): Promise<any> => {
     const params = {
         Bucket: process.env.S3_BUCKET_NAME,
@@ -26,6 +34,12 @@ export const getGPSLogs = async (logName): Promise<any> => {
     });
 };
 
+/**
+ * Upload audio
+ * @param audioName File name
+ * @param audio To upload
+ * @returns success or failure
+ */
 export const uploadAudio = async (audioName, audio): Promise<any> => {
     const params = {
         Bucket: process.env.S3_BUCKET_NAME,
@@ -43,6 +57,11 @@ export const uploadAudio = async (audioName, audio): Promise<any> => {
     });
 };
 
+/**
+ * Delete audio file
+ * @param audioName File name
+ * @returns Success or failure
+ */
 export const deleteAudio = async (audioName): Promise<any> => {
     const params = {
         Bucket: process.env.S3_BUCKET_NAME,
@@ -59,6 +78,12 @@ export const deleteAudio = async (audioName): Promise<any> => {
     });
 };
 
+/**
+ * Upload image
+ * @param imageName File name
+ * @param image To upload
+ * @returns success or failure
+ */
 export const uploadImage = async (imageName, image): Promise<any> => {
     const params = {
         Bucket: process.env.S3_BUCKET_NAME,
@@ -76,6 +101,11 @@ export const uploadImage = async (imageName, image): Promise<any> => {
     });
 };
 
+/**
+ * Delete image file
+ * @param imageName File name
+ * @returns Success or failure
+ */
 export const deleteImage = async (imageName): Promise<any> => {
     const params = {
         Bucket: process.env.S3_BUCKET_NAME,
@@ -92,10 +122,15 @@ export const deleteImage = async (imageName): Promise<any> => {
     });
 };
 
-export const getAudioUrl = async (imageName): Promise<any> => {
+/**
+ * Generate presigned URL for audio file
+ * @param audioName File name
+ * @returns Presigned URL
+ */
+export const getAudioUrl = async (audioName): Promise<any> => {
     const params = {
         Bucket: process.env.S3_BUCKET_NAME,
-        Key: S3_AUDIO_FOLDER + imageName,
+        Key: S3_AUDIO_FOLDER + audioName,
         Expires: S3_URL_EXPIRATION_TIME
     };
 
@@ -109,6 +144,11 @@ export const getAudioUrl = async (imageName): Promise<any> => {
     });
 };
 
+/**
+ * Generate presigned URL for image file
+ * @param imageName File name
+ * @returns Presigned URL
+ */
 export const getImageUrl = async (imageName): Promise<any> => {
     const params = {
         Bucket: process.env.S3_BUCKET_NAME,

@@ -1,5 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 
+/**
+ * Adds CORS onto response
+ * @param req Request
+ * @param res Response
+ * @param next Next middleware
+ */
 export const cors = (req: Request, res: Response, next: NextFunction) => {
     // Add CORS headers
     res.header('Access-Control-Allow-Origin', '*');

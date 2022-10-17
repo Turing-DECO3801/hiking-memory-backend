@@ -2,6 +2,9 @@ import mysql from 'mysql';
 
 export let db: mysql.Pool;
 
+/**
+ * Establish database connection
+ */
 export const setUpDatabase = async () => {
     db = mysql.createPool({
         host: process.env.DB_HOST,
@@ -13,6 +16,11 @@ export const setUpDatabase = async () => {
     });
 };
 
+/**
+ * Get all hikes for user
+ * @param email User's email
+ * @returns All hikes
+ */
 export const getAllHikes = async (email: string): Promise<any> => {
     const sql = 'SELECT * FROM hikes WHERE email = ?';
     const values = [email];
@@ -27,6 +35,12 @@ export const getAllHikes = async (email: string): Promise<any> => {
     });
 };
 
+/**
+ * Get a hike
+ * @param email User's email
+ * @param hikeId Hike id
+ * @returns A hike
+ */
 export const getAHike = async (email: string, hikeId): Promise<any> => {
     const sql = 'SELECT * FROM hikes WHERE id = ? AND email = ?';
     const values = [hikeId, email];
@@ -41,6 +55,12 @@ export const getAHike = async (email: string, hikeId): Promise<any> => {
     });
 };
 
+/**
+ * Delete a hike
+ * @param email User's email
+ * @param hikeId Hike id
+ * @returns Deleted hike
+ */
 export const deleteAHike = async (email: string, hikeId): Promise<any> => {
     const sql = 'DELETE FROM hikes WHERE id = ? AND email = ?';
     const values = [hikeId, email];
@@ -55,6 +75,13 @@ export const deleteAHike = async (email: string, hikeId): Promise<any> => {
     });
 };
 
+/**
+ * Update a hike's favourite status
+ * @param email User's email
+ * @param hikeId Hike id
+ * @param value Update to
+ * @returns Updated hike
+ */
 export const favouriteAHike = async (email: string, hikeId, value): Promise<any> => {
     const sql = 'UPDATE hikes SET favourite = ? WHERE id = ? AND email = ?';
     const values = [value, hikeId, email];
@@ -69,6 +96,13 @@ export const favouriteAHike = async (email: string, hikeId, value): Promise<any>
     });
 };
 
+/**
+ * Update hike viewed status
+ * @param email User's email
+ * @param hikeId Hike id
+ * @param value Update to
+ * @returns Updated hike
+ */
 export const updateHikeViewedStatus = async (email: string, hikeId, value): Promise<any> => {
     const sql = 'UPDATE hikes SET viewed = ? WHERE id = ? AND email = ?';
     const values = [value, hikeId, email];
@@ -83,6 +117,13 @@ export const updateHikeViewedStatus = async (email: string, hikeId, value): Prom
     });
 };
 
+/**
+ * Update hike's distance
+ * @param email User's email
+ * @param hikeId Hike id
+ * @param value Update to
+ * @returns Updated hike
+ */
 export const updateHikeDistance = async (email: string, hikeId, value): Promise<any> => {
     const sql = 'UPDATE hikes SET distance = ? WHERE id = ? AND email = ?';
     const values = [value, hikeId, email];
@@ -97,6 +138,13 @@ export const updateHikeDistance = async (email: string, hikeId, value): Promise<
     });
 };
 
+/**
+ * Update hike's name
+ * @param email User's email
+ * @param hikeId Hike id
+ * @param value Update to
+ * @returns Updated hike
+ */
 export const updateHikeName = async (email: string, hikeId, value): Promise<any> => {
     const sql = 'UPDATE hikes SET path_name = ? WHERE id = ? AND email = ?';
     const values = [value, hikeId, email];
@@ -111,7 +159,13 @@ export const updateHikeName = async (email: string, hikeId, value): Promise<any>
     });
 };
 
-export const updateNotes = async ( memoId, value): Promise<any> => {
+/**
+ * Update memo's notes
+ * @param memoId Memo id
+ * @param value Update to
+ * @returns Updated memo
+ */
+export const updateNotes = async (memoId, value): Promise<any> => {
     const sql = 'UPDATE memos SET notes = ? WHERE id = ?';
     const values = [value, memoId];
 
@@ -125,6 +179,12 @@ export const updateNotes = async ( memoId, value): Promise<any> => {
     });
 };
 
+/**
+ * Update memo's transcription
+ * @param memoId Memo id
+ * @param value Update to
+ * @returns Updated memo
+ */
 export const updateTranscription = async (memoId, value): Promise<any> => {
     const sql = 'UPDATE memos SET transcription = ? WHERE id = ?';
     const values = [value, memoId];
@@ -139,7 +199,13 @@ export const updateTranscription = async (memoId, value): Promise<any> => {
     });
 };
 
-export const updateAudioPointer = async ( memoId, value): Promise<any> => {
+/**
+ * Update memo's audio pointer
+ * @param memoId Memo id
+ * @param value Update to
+ * @returns Updated memo
+ */
+export const updateAudioPointer = async (memoId, value): Promise<any> => {
     const sql = 'UPDATE memos SET audio = ? WHERE id = ?';
     const values = [value, memoId];
 
@@ -153,6 +219,11 @@ export const updateAudioPointer = async ( memoId, value): Promise<any> => {
     });
 };
 
+/**
+ * Get a memo
+ * @param memoId Memo id
+ * @returns Memo
+ */
 export const getAMemo = async (memoId): Promise<any> => {
     const sql = 'SELECT * FROM memos WHERE id = ?';
     const values = [memoId];
@@ -167,6 +238,11 @@ export const getAMemo = async (memoId): Promise<any> => {
     });
 };
 
+/**
+ * Get all memos for a hike
+ * @param hikeId Hike id
+ * @returns All memos
+ */
 export const getAllMemosForHike = async (hikeId): Promise<any> => {
     const sql = 'SELECT * FROM memos WHERE hike_id = ?';
     const values = [hikeId];
@@ -181,6 +257,12 @@ export const getAllMemosForHike = async (hikeId): Promise<any> => {
     });
 };
 
+/**
+ * Update memo's image pointer
+ * @param memoId Memo id
+ * @param value Update to
+ * @returns Updated memo
+ */
 export const updateImagePointer = async (memoId, value): Promise<any> => {
     const sql = 'UPDATE memos SET image = ? WHERE id = ?';
     const values = [value, memoId];
@@ -195,6 +277,11 @@ export const updateImagePointer = async (memoId, value): Promise<any> => {
     });
 };
 
+/**
+ * Check if user exists
+ * @param email User's email
+ * @returns User
+ */
 export const checkEmailExist = async (email): Promise<any> => {
     const sql = 'SELECT * FROM users WHERE email = ?';
     const values = [email];
@@ -209,6 +296,13 @@ export const checkEmailExist = async (email): Promise<any> => {
     });
 };
 
+/**
+ * Add new user
+ * @param email User's email
+ * @param password User's password
+ * @param name User's name
+ * @returns User
+ */
 export const addNewUser = async (email, password, name): Promise<any> => {
     const sql = 'INSERT INTO users(email, password, name, insertion_time) VALUES(?, ?, ?, ?)';
     const values = [email, password, name, 'NOW()'];
@@ -223,6 +317,12 @@ export const addNewUser = async (email, password, name): Promise<any> => {
     });
 };
 
+/**
+ * Get a user
+ * @param email User's email
+ * @param password User's password
+ * @returns User
+ */
 export const getUser = async (email, password): Promise<any> => {
     const sql = 'SELECT * FROM users WHERE email = ? AND password = ?';
     const values = [email, password];
@@ -237,6 +337,11 @@ export const getUser = async (email, password): Promise<any> => {
     });
 };
 
+/**
+ * Get all hike paths with image
+ * @param email User's email
+ * @returns All hike paths
+ */
 export const getAllHikePathWithImageForUser = async (email: string): Promise<any> => {
     const sql = `
         SELECT hikes.path_name, memos.image

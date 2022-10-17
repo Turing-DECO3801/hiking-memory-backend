@@ -4,6 +4,9 @@ import { addNewUser, checkEmailExist, getUser } from '../services/database';
 
 const router = Router();
 
+/**
+ * Log user in
+ */
 router.post('/login', async (req: Request, res: Response) => {
     const email = req.body.email;
     const password = req.body.password;
@@ -27,6 +30,9 @@ router.post('/login', async (req: Request, res: Response) => {
     res.send({ result: false });
 });
 
+/**
+ * Sign up a new account
+ */
 router.post('/signup', async (req: Request, res: Response) => {
     const email = req.body.email;
     const password = req.body.password;

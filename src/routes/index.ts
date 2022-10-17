@@ -6,7 +6,9 @@ import statRoute from './stats';
 
 const router = express.Router();
 
-// Health check
+/**
+ * Health check
+ */
 router.get('/', (req: Request, res: Response) => {
     res.send('Ok');
 });

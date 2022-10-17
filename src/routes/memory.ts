@@ -5,6 +5,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 const router = Router();
 
+/**
+ * Update notes
+ */
 router.post('/:memoId/notes', async (req: Request, res: Response) => {
     const actualEmail = req.headers.actualEmail as string;
     const memoId = req.params.memoId;
@@ -29,6 +32,9 @@ router.post('/:memoId/notes', async (req: Request, res: Response) => {
     res.send({ result: true });
 });
 
+/**
+ * Upload audio
+ */
 router.post('/:memoId/audio', async (req: Request, res: Response) => {
     const actualEmail = req.headers.actualEmail as string;
     const memoId = req.params.memoId;
@@ -63,6 +69,9 @@ router.post('/:memoId/audio', async (req: Request, res: Response) => {
     res.send({ result: true });
 });
 
+/**
+ * Delete audio
+ */
 router.delete('/:memoId/audio', async (req: Request, res: Response) => {
     const actualEmail = req.headers.actualEmail as string;
     const memoId = req.params.memoId;
@@ -84,6 +93,9 @@ router.delete('/:memoId/audio', async (req: Request, res: Response) => {
     res.send({ result: true });
 });
 
+/**
+ * Upload image
+ */
 router.post('/:memoId/image', async (req: Request, res: Response) => {
     const actualEmail = req.headers.actualEmail as string;
     const memoId = req.params.memoId;
@@ -118,6 +130,9 @@ router.post('/:memoId/image', async (req: Request, res: Response) => {
     res.send({ result: true });
 });
 
+/**
+ * Delete image
+ */
 router.delete('/:memoId/image', async (req: Request, res: Response) => {
     const actualEmail = req.headers.actualEmail as string;
     const memoId = req.params.memoId;
@@ -139,6 +154,9 @@ router.delete('/:memoId/image', async (req: Request, res: Response) => {
     res.send({ result: true });
 });
 
+/**
+ * Update audio transcription
+ */
 router.post('/:memoId/transcription', async (req: Request, res: Response) => {
     const actualEmail = req.headers.actualEmail as string;
     const memoId = req.params.memoId;
